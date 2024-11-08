@@ -44,48 +44,50 @@ ggplot(data = evals, aes(x = score, y = bty_avg))+
   geom_jitter()
 ```
 
-Jittering is to randomly move points about around where they originally were. The original scatter point was misleading as many points were in the same spot leading to the density of points at a spot isnt communicated leading to the interpritation of the amount of dots and distribution of data to become misleading
+Jittering is to randomly move points about around where they originally were. The original scatter point was misleading as many points were in the same spot leading to the density of points at a spot isnt communicated leading to the interpretation of the amount of dots and distribution of data to become misleading
 
 # Exercise 2: Simple Linear regression with a numerical predictor
 
 1. Fit a linear model called `score_bty_fit` to predict average professor evaluation `score` from average beauty rating (`bty_avg`). Print the regression output using `tidy()`.
 
-```{r fit-score_bty_fit, eval = FALSE}
+```{r fit-score_bty_fit}
 # remove eval = FALSE from the code chunk options after filling in the blanks
 score_bty_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(___ ~ ___, data = ___)
+  fit(bty_avg ~ score, data = evals)
 ```
 
-```{r tidy-score_bty_fit, eval = FALSE}
+```{r tidy-score_bty_fit}
 # remove eval = FALSE from the code chunk options after filling in the blanks
-tidy(___)
+tidy(score_bty_fit)
 ```
 
-*Add your linear model here. Don't worry too much about notation, you can use things like score-hat.*
+score = 0.5255675*bty_avg+2.2237421
 
 2. Plot the data again using `geom_jitter()`, and add the regression line.
 
-```{r viz-score_bty_fit,eval=FALSE}
-# add your plot here. Hint, you can add the regression line using geom_smooth()
+```{r viz-score_bty_fit}
+ggplot(data = evals, aes(x = bty_avg, y = score))+
+  geom_jitter()+
+  geom_smooth(method = "lm", se = FALSE)
 ```
 
 3. Interpret the slope of the linear model in context of the data.
 
-*Add your interpretation here*
+The linear model shows that as the bty_avg increases, the score increase too at a very slow increase
 
 4. Interpret the intercept of the linear model in context of the data. Comment on whether or not the intercept makes sense in this context.
 
-*Add your interpretation here*
+The intercept makes sense in this linear model as someone can have a beauty score of 0 and have a higher score overall.
 
 5. Determine the $R^2$ of the model and interpret it in the context of the data.
 
-```{r R2, eval = FALSE}
-# remove eval = FALSE from the code chunk options after filling in the blanks
-glance(___)$___
+```{r R2}
+
+glance(score_bty_fit)$r.squared
 ```
 
-*Add your interpretation here*
+
 
 6. Make a plot of residuals vs. predicted values for the model above.
 
